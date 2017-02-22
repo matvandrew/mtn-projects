@@ -8,7 +8,7 @@
   <property name="dist"  location="dist"/>
   <property name="test"  location="test"/>
 
-  <target name="init">
+  <target name="init" depends="clean" >
     <mkdir dir="${build}"/>
   </target>
 
