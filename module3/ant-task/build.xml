@@ -1,0 +1,54 @@
+<project name="MAProject" default="dist" basedir=".">
+<path id="classpath">
+    <fileset dir="lib" includes="*.jar"/>
+</path>
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="test"  location="test"/>
+
+  <target name="init">
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init" >
+    <javac srcdir="${src}" destdir="${build}">
+	<classpath refid="classpath" />      
+    </javac>
+  </target>
+
+  <target name="compile_test" depends="compile" >
+    <javac srcdir="${test}" destdir="${build}">
+        <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="dist" depends="test" >
+    <mkdir dir="${dist}/lib"/>
+    <jar jarfile="${dist}/lib/MAProject.jar" basedir="${build}">
+    	<manifest>
+        	  <attribute name="Main-Class" value="com.test.Project"/>
+    	</manifest>
+    </jar>
+  <tar destfile="${dist}/MAProject.tar" basedir="${dist}/lib"/>
+  </target>
+
+  <target name="test" depends="compile_test">
+    <echo>Running target test</echo>
+  <junit>
+        <classpath refid="classpath" />
+	<classpath location="${build}" />
+    <batchtest>
+       <fileset dir="${test}">
+           <include name="**/*Test*" />
+       </fileset>
+    </batchtest>
+    <formatter type="brief" usefile="false"/>
+  </junit>
+  </target> 
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
