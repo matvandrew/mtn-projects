@@ -34,6 +34,7 @@
         <configuration>
           <descriptor>src/assembly/dep.xml</descriptor>
 	  <outputDirectory>${project.basedir}</outputDirectory>
+	  <finalName>${project.name}_${maven.build.timestamp}</finalName>
         </configuration>
         <executions>
           <execution>
